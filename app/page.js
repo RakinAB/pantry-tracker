@@ -72,10 +72,14 @@ export default function Home() {
     const docSnap = await getDoc(docRef)
     if(docSnap.exists()) {
       const {count} = docSnap.data()
-      await setDoc(docRef, {count: count - 1})
-    } else{
-      await deleteDoc(docRef)
-    }
+      if (count === 1){
+        await deleteDoc(docRef)
+      }
+      else{
+        await setDoc(docRef, {count: count - 1})
+      }
+      
+    } 
     await updatePantry()
   }
 
